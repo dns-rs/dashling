@@ -1,0 +1,180 @@
+$dark: #2a2a2a;
+
+
+.container {
+   margin: 0px auto;
+   width: 100%;
+   max-width: 1024px;
+   text-align: center;
+   border: 1px solid $dark;
+   padding: 30px 10px 20px;
+   border-radius: 10px;
+}
+.header {
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+   // padding: 20px 0px 0px;
+}
+.image {
+   height: 45px;
+   width: auto;
+   border-radius: 50%;
+   background-color: $dark;
+   padding: 11px;
+   margin-bottom: 10px;
+   &:hover {
+      background-color: #2e2e2e;
+      animation:  blink 0.2s ease-in-out 2;
+   }
+}
+
+@keyframes blink {
+   0%, 100% {
+     background-color: $dark; 
+   }
+   50% {
+     background-color: #2e2e2e; 
+   }
+ }
+
+.card {
+   a {
+      display: flex;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-size: 13px;
+   }
+}
+.right {
+   // width: 50%;
+   // float: right;
+   // padding: 20px;
+}
+.left {
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   max-width: 1024px;
+   margin: auto;
+   margin-top: 0;
+}
+
+@media only screen and (max-width: 1100px) {
+   .right {
+      width: 100%;
+   }
+   .left {
+      width: 100%;
+   }
+   .sensor-component {
+      padding: 14px 0px 0px 0px !important;
+   }
+}
+
+.gridline {   
+   display: flex;
+   flex-direction: row;
+   .polutka {
+      width: 50%;
+   }
+}
+
+.weather-component {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+
+.sensor-component {
+   display: flex;
+   flex-direction: row;   
+   gap: 20px;
+   width: 100%;
+   justify-content: space-between;
+   padding: 15px 0px 00px 0px
+}
+
+.wrapper {
+   height: 100%;
+   width: 100%;
+   animation:  fade-me-in 0.4s ease-in forwards;
+   .loader {
+      animation:  fade-me-out 0.3s ease-in-out forwards;
+      animation-delay: 1.8s;
+      z-index: 1;
+      width: 100%;
+      height: 100%;    
+      position: absolute;
+      display: flex;      
+      font-size: 20vw;
+      justify-content: center;
+      align-items: center;
+      // min-height: 100vh;
+      color:$dark;
+   }
+   .main-container {
+      animation:  fade-me-in 0.7s ease-in forwards;
+      animation-delay: 1.9s;
+      z-index: 2;
+      width: 100%;
+      height: 100%;      
+      position: absolute;
+      opacity: 0;
+      padding: 1% 4%;
+      display: flex;
+      flex-direction: column;
+   }
+}
+
+.fade-me {
+   opacity: 0;
+   animation:  fade-me-in 0.4s ease-in forwards;
+   animation-delay: 0.8s;
+}
+
+@keyframes fade-me-in {
+   0% {
+      opacity: 0;
+      display: flex;
+   }
+   100% {
+      opacity: 1;
+   }
+ }
+
+@keyframes fade-me-out {
+   0% {
+      opacity: 1;      
+   }
+   100% {
+      opacity: 0;
+      display: none;      
+   }
+}
+
+.default-button-holder {
+   height: 100%;
+   text-align: center;
+   padding-top: 20px;
+   display: flex;
+   gap: 20px;
+   justify-content: center;
+   button {
+      background-color: $dark;
+      padding: 10px;
+      border-radius: 10px;
+      height: fit-content;
+      width: 150px;
+   }
+}
+
+.modal-content {
+   display: flex;
+   flex-direction: column;
+}

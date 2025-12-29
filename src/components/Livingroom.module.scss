@@ -1,0 +1,110 @@
+.container {
+   // margin: 50px auto 3px auto;
+   width: 100%;
+   max-width: 1024px;
+   text-align: center;
+   border: 1px solid #2a2a2a;
+   padding: 20px 10px 20px;
+   border-radius: 10px;
+}
+.header {
+   display: flex;
+   flex-direction: column;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+   margin-top: -41px;
+   h1 {
+      position: relative;
+      top: 3px;
+      background-color: #353535;
+      padding: 5px;
+      font-size: 16px;
+      text-transform: uppercase;
+   }
+   
+}
+
+@keyframes fadeInAfterDelay {
+   0%, 20% {
+     opacity: 0;
+   }
+   100% {
+     opacity: 1;
+   }
+ }
+ 
+ .scanner {
+   opacity: 0;
+   animation: fadeInAfterDelay 0.3s ease forwards;
+   animation-delay: 1s;
+ }
+
+.weather-container {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   flex-wrap: nowrap;
+   flex-direction: row;
+   padding-top: 17px;
+}
+
+.weather-module {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   .icons {
+      margin-right: 10px;  
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #2a2a2a;
+      padding: 5px;
+      margin-bottom: 10px;
+      text-align: center;  
+      float: left;    
+      &:hover {
+         background-color: #2e2e2e;
+         animation:  blink 0.2s ease-in-out 2;
+      }
+      svg {
+         height: 12px;
+      }
+      .icon-1 {
+         position: relative;
+         left: 0px;
+         
+         svg {
+            height: 12px;
+         }
+      }
+      .icon-2 {
+         svg {
+            height: 6px;
+            position: relative;
+            top: -40px;
+            left: 8px;
+         }
+      }
+   }
+   .text {
+      position: relative;
+      top: -5px;
+      font-size: 12px;
+   }
+   
+}
+
+@media screen and (max-width: 650px) {
+   .weather-container {
+     flex-wrap: wrap;
+   }
+   .weather-module {
+      min-width: 35%;
+      flex-direction: column;
+      .icons {
+         margin-right: 0px;
+      }
+   }
+}

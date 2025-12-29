@@ -1,0 +1,84 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThermometerHalf, faDroplet, faComment, faBed, faWifi } from '@fortawesome/free-solid-svg-icons';
+import styles from './Bedroom.module.scss';
+
+interface BedroomDataType {
+   temperature: number;
+   feelsLike: number;
+   humidity: number;
+}
+
+const Bedroom = () => {
+   const [BedroomData, setBedroomData] = useState<BedroomDataType | null>(null);
+
+   const fetchBedroomData = async (retryCount = 0) => {
+      try {
+         const response = await axios.get('http://192.168.1.101/data', {
+            timeout: 5000,
+         });
+         setBedroomData(response.data);
+         console.log("Bedroom data:", response.data);
+      } catch (error) {
+         if (axios.isAxiosError(error)) {
+            if (!error.response) {
+               if (retryCount < 3) {
+                  setTimeout(() => fetchBedroomData(retryCount + 1), 1000);
+               } else {
+                  console.error('Network error:', error);
+               }
+            } else {
+               console.error('Error response:', error.response);
+            }
+         } else {
+            console.error('Unknown error:', error);
+         }
+      }
+   };
+
+   useEffect(() => {
+      fetchBedroomData();
+      const intervalId = setInterval(fetchBedroomData, 120000);
+      return () => clearInterval(intervalId);
+   }, []);
+
+   return (
+      <div className={styles['container']}>
+         <div className={styles['header']}>
+            <h1><FontAwesomeIcon icon={faBed} /></h1>
+         </div>
+         {BedroomData ? (
+            <div className={styles['weather-container']}>
+               <div className={styles['weather-module']}>
+                  <div className={styles['icons']}>
+                     <FontAwesomeIcon icon={faThermometerHalf} />
+                  </div>
+                  <div className={styles['text']}>
+                     {BedroomData.temperature}°C
+                  </div>
+               </div>
+               <div className={styles['weather-module']}>
+                  <div className={styles['icons']}>
+                        <span className={styles['icon-1']}><FontAwesomeIcon icon={faThermometerHalf} /> </span>
+                        <span className={styles['icon-2']}><FontAwesomeIcon icon={faComment} /> </span>
+                  </div>
+                  <div className={styles['text']}>
+                    {BedroomData.feelsLike}°C
+                  </div>
+               </div>
+               <div className={styles['weather-module']}>
+                  <div className={styles['icons']}>
+                     <FontAwesomeIcon icon={faDroplet} />
+                  </div>
+                  <div className={styles['text']}>
+                    {BedroomData.humidity}%
+                  </div>
+               </div>
+            </div>
+         ): (<>Initializing... <span className={styles['scanner']}><FontAwesomeIcon icon={faWifi} spinPulse/></span></>)}
+      </div>
+   );
+};
+
+export default Bedroom;
