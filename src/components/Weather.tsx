@@ -21,10 +21,15 @@ interface WeatherCondition {
     image: string;
 }
 
+const { latitudeNum, longitudeNum } = {
+    latitudeNum: Number(process.env.NEXT_PUBLIC_LATITUDE!),
+    longitudeNum: Number(process.env.NEXT_PUBLIC_LONGITUDE!)
+};
+
 const Weather = () => {
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-    const [latitude, setLatitude] = useState<number>(46.10);
-    const [longitude, setLongitude] = useState<number>(19.6667);
+    const [latitude, setLatitude] = useState<number>(latitudeNum);
+    const [longitude, setLongitude] = useState<number>(longitudeNum);
     const [current, setCurrent] = useState<string[]>([
         "temperature_2m",
         "relative_humidity_2m",
@@ -305,10 +310,10 @@ const Weather = () => {
                 <div className={styles['weather-container']}>               
                      <div className={styles['weather-module']}>
                         <div className={styles['icons']}>
-                            <img src={wc[0].image} alt={wc[0].description} />
+                            <img src={wc[weatherData.weather_code].image} alt={wc[weatherData.weather_code].description} />
                         </div>
                         <div className={styles['text']}>
-                            {wc[0].description}
+                            {wc[weatherData.weather_code].description}
                         </div>        
                     </div>   
                     <div className={styles['weather-module']}>

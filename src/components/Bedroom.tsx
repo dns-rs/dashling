@@ -10,12 +10,14 @@ interface BedroomDataType {
    humidity: number;
 }
 
+const sensor: string | undefined = process.env.NEXT_PUBLIC_SENSOR_BEDROOM;
+
 const Bedroom = () => {
    const [BedroomData, setBedroomData] = useState<BedroomDataType | null>(null);
 
    const fetchBedroomData = async (retryCount = 0) => {
       try {
-         const response = await axios.get('http://192.168.1.101/data', {
+         const response = await axios.get(sensor!, {
             timeout: 5000,
          });
          setBedroomData(response.data);

@@ -4,19 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThermometerHalf, faDroplet, faComment, faCross, faWifi } from '@fortawesome/free-solid-svg-icons';
 import styles from './Livingroom.module.scss';
 
-// Define the type for LivingroomData
 interface LivingroomDataType {
    temperature: number;
    feelsLike: number;
    humidity: number;
 }
 
+const sensor: string | undefined = process.env.NEXT_PUBLIC_SENSOR_LIVINGROOM;
+
 const Livingroom = () => {
    const [LivingroomData, setLivingroomData] = useState<LivingroomDataType | null>(null);
 
    const fetchLivingroomData = async (retryCount = 0) => {
       try {
-         const response = await axios.get('http://192.168.1.102/data', {
+         const response = await axios.get(sensor!, {
             timeout: 5000,
          });
          setLivingroomData(response.data);
