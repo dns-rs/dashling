@@ -20,6 +20,7 @@ By default I have included a dummy list that contains some of my own shortcuts, 
 To create your own grid, click on the + button on the bottom right corner and fill out the form.
 
 Sensor data is being fetched via get requests. Dashling expects the following structure from your sensors:
+
 {
   temperature: 22.2,
   feelsLike: 21.8,
