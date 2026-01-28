@@ -95,7 +95,7 @@ const Grid: React.FC<GridProps> = ({ sites, label, onAddNewClick  }) => {
         <div className={styles.card}>
           <button 
             onClick={() => onAddNewClick(label)}
-            className={styles['add-new-button']} // Add this class for styling
+            className={styles['add-new-button']}
           >
             <div className={styles.image}>
               <FontAwesomeIcon icon={faCirclePlus} />          

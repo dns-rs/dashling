@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLabel, setSelectedLabel] = useState('')
+  const localhost: string | undefined = process.env.NEXT_PUBLIC_LOCALHOST
 
   // FALLBACK URLS START
   const adult = [     
@@ -38,12 +40,12 @@ export default function Home() {
   ]
 
   const lab = [
-    { title: 'Next', icon: 'favicon.ico', url: 'http://192.168.1.40:3000'},
-    { title: 'Dev', icon: '/images/earth.png', url: 'http://192.168.1.40/dev/'},
-    { title: 'Cronos-4', icon: 'http://192.168.1.40/dev/2021/timetravel/img/favicon/favicon.ico', url: 'http://192.168.1.40/dev/2021/timetravel'},
-    { title: 'LoanWolf', icon: 'http://192.168.1.40/dev/2022/LoanWolf/img/favicon/favicon.ico', url: 'http://192.168.1.40/dev/2022/LoanWolf'},
-    { title: 'Guardian', icon: '/images/earth.png', url: 'http://guardian.test/'},
-    { title: 'GDSprite Animator', icon: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg', url: 'http://192.168.1.40:3002'}
+    { title: 'Next', icon: 'favicon.ico', url: `${localhost}:3000/`},
+    { title: 'Dev', icon: '/images/earth.png', url: `${localhost}/dev/`},
+    { title: 'Cronos-4', icon: `${localhost}/dev/2021/timetravel/img/favicon/favicon.ico`, url: `${localhost}/dev/2021/timetravel` },
+    { title: 'LoanWolf', icon: `${localhost}/dev/2022/LoanWolf/img/favicon/favicon.ico`, url: `${localhost}/dev/2022/LoanWolf` },
+    { title: 'Guardian', icon: '/images/earth.png', url: 'http://guardian.test/' },
+    { title: 'GDSprite Animator', icon: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg', url: `${localhost}:3002` }
   ]
 
   const defaultUrls = {
@@ -73,38 +75,6 @@ export default function Home() {
     url: string;
   }
   
-  // const handleAddGrid = (gridLabel: string, siteTitle: string, siteUrl: string) => {
-  //   const newGrid = {
-  //     [gridLabel]: [{ title: siteTitle, url: siteUrl }]
-  //   };
-    
-  //   const updatedUrls = {
-  //     ...activeUrls,
-  //     ...newGrid
-  //   };
-
-  //   const stored = localStorage.getItem('defaultUrls');
-  //   if (stored) {
-  //     let grid = JSON.parse(stored);
-  //     if (!(gridLabel in grid )) {
-  //       grid[gridLabel] = newGrid[gridLabel];
-  //       localStorage.setItem('defaultUrls', JSON.stringify(grid));
-  //     } 
-  //     else {
-  //       grid[gridLabel].push(newGrid[gridLabel][0]); 
-  //       localStorage.setItem('defaultUrls', JSON.stringify(grid));
-  //     }      
-  //   }
-  //   else{ 
-  //     let grid = [];
-  //     grid[gridLabel].push(newGrid[gridLabel][0]); 
-  //     localStorage.setItem('defaultUrls', JSON.stringify(grid));
-  //   }
-    
-    
-  //   window.location.reload();
-  // };
-
   const handleAddGrid = (gridLabel: string, siteTitle: string, siteUrl: string) => {
     const newItem = { title: siteTitle, url: siteUrl };  // Single item to add
     
@@ -125,7 +95,8 @@ export default function Home() {
     window.location.reload();
   };
 
-  const handleAddNewClick = (gridLabel: string) => {
+  const handleAddNewClick = (gridLabel: string) => {    
+    setSelectedLabel(gridLabel);
     setIsModalOpen(true); 
   };
 
@@ -169,10 +140,6 @@ export default function Home() {
       }
     }
   }
-
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    // event.currentTarget.src = '/images/earth.png'; 
-  };
 
   function loadFromStorage() {
     console.log("sending to localstorage");
@@ -227,8 +194,8 @@ export default function Home() {
       <div className={styles['modal']}>
         <Modal 
           label="Add New Grid" 
-          content={<ModalGridCreate onSave={handleAddGrid} />}
-          onClose={handleCloseModal}
+          content={<ModalGridCreate onSave={handleAddGrid} selected={selectedLabel} />}
+          onClose={handleCloseModal}          
         />
       </div>
     )}
