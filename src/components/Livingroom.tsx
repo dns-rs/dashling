@@ -14,6 +14,7 @@ const sensor: string | undefined = process.env.NEXT_PUBLIC_SENSOR_LIVINGROOM;
 
 const Livingroom = () => {
    const [LivingroomData, setLivingroomData] = useState<LivingroomDataType | null>(null);
+   const [responseError, setResponseError] = useState(false)
 
    const fetchLivingroomData = async (retryCount = 0) => {
       try {
@@ -36,6 +37,7 @@ const Livingroom = () => {
          } else {
             console.error('Unknown error:', error);
          }
+         setResponseError(true)
       }
    };
 
@@ -48,7 +50,7 @@ const Livingroom = () => {
    return (
       <div className={styles['container']}>
          <div className={styles['header']}>
-            <h1><FontAwesomeIcon icon={faCross} /></h1>
+            <h1 style={{color: responseError ? '#6a0000' : 'inherit'}} onClick={() => fetchLivingroomData()}><FontAwesomeIcon icon={faCross} /></h1>
          </div>
          {LivingroomData ? (
             <div className={styles['weather-container']}>
