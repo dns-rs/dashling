@@ -9,59 +9,21 @@ import Modal from '@/components/Modal';
 import ModalGridCreate from '@/components/ModalGridCreate';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpiral, faDatabase, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faSpiral, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState('')
-  const localhost: string | undefined = process.env.NEXT_PUBLIC_LOCALHOST
 
-  // FALLBACK URLS START
-  const adult = [     
-    { title: 'Szamlak', url: 'https://docs.google.com/spreadsheets/d/1xIM8L0G-buGNm7-HxfxHFqTVuPZ9ZqRYyj3Ny2ycHRQ/edit?gid=0#gid=0' },
-    { title: 'Hazpez', url: 'https://docs.google.com/spreadsheets/d/1L-Evhx_K1UmL2T-bU-roBA37RJvs3I3XRN3cr-Y5iik/edit?gid=0#gid=0' },
-    { title: 'Mikő', url: 'https://docs.google.com/spreadsheets/d/1tYgTRZUzh63EzuxvB_PrL1ABydvcPs42EkuryKoZ6kA/edit?gid=0#gid=0'},
-    { title: 'Autoiskola', url: 'https://docs.google.com/spreadsheets/d/1D5bfq2RC5gaxviJhiuT9MyzDdRHjrC2dbBZheiyPX-k/edit?gid=0#gid=0'}
-  ];
-
-  const favorites = [
-    { title: 'News', url: 'https://feedly.com/i/collection/content/user/95612b87-9915-4992-b9ce-5757e298c534/category/global.all'},    
-    { title: 'YouTube', url: 'https://www.youtube.com/' },    
-    { title: 'Reddit', url: 'https://www.reddit.com/' },
-    { title: 'Facebook', url: 'https://www.facebook.com/' },
-    { title: 'Instagram', url: 'https://www.instagram.com/' },
-    { title: 'Bandcamp', url: 'https://bandcamp.com/alg0rh1tm' },    
-    { title: 'SoundCloud', url: 'https://soundcloud.com/feed/' },
-    { title: 'Discogs', url: 'https://www.discogs.com/my' },
-    { title: 'iMDb', url: 'https://www.imdb.com/user/ur36337716/?ref_=nv_usr_prof_2' },
-    { title: 'Goodreads', url: 'https://www.goodreads.com/' },
-    { title: 'Netflix', url: 'https://www.netflix.com/' },
-  ]
-
-  const lab = [
-    { title: 'Next', icon: 'favicon.ico', url: `${localhost}:3000/`},
-    { title: 'Dev', icon: '/images/earth.png', url: `${localhost}/dev/`},
-    { title: 'Cronos-4', icon: `${localhost}/dev/2021/timetravel/img/favicon/favicon.ico`, url: `${localhost}/dev/2021/timetravel` },
-    { title: 'LoanWolf', icon: `${localhost}/dev/2022/LoanWolf/img/favicon/favicon.ico`, url: `${localhost}/dev/2022/LoanWolf` },
-    { title: 'Guardian', icon: '/images/earth.png', url: 'http://guardian.test/' },
-    { title: 'GDSprite Animator', icon: 'https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg', url: `${localhost}:3002` }
-  ]
-
-  const defaultUrls = {
-    'adult': adult,
-    'favorites': favorites,
-    'lab': lab
-  }
-
-  const [activeUrls, setActiveUrls] = useState<typeof defaultUrls>(defaultUrls);
+  const [activeUrls, setActiveUrls] = useState<{ [key: string]: Array<{ title: string; url: string }> }>({});
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
         const stored = localStorage.getItem('defaultUrls');
         if (stored) {
-          setActiveUrls(JSON.parse(stored) as typeof defaultUrls);
+          setActiveUrls(JSON.parse(stored));
         }
       } catch (error) {
         console.error('Failed to parse localStorage:', error);
@@ -69,7 +31,6 @@ export default function Home() {
     }
   }, []);
 
-  // FALLBACK URLS END
   interface Site {
     title: string;
     url: string;
@@ -103,8 +64,6 @@ export default function Home() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -141,30 +100,6 @@ export default function Home() {
     }
   }
 
-  function loadFromStorage() {
-    console.log("sending to localstorage");
-
-    if (typeof window !== 'undefined') {
-      const storedUrls = localStorage.getItem('defaultUrls');
-      const sitesDiv = document.getElementById('sites');
-      const loaderDiv = document.getElementById('loader_buttons');
-      
-      if (storedUrls) {
-        const parsedUrls = JSON.parse(storedUrls);
-        console.log('Loaded from storage:', parsedUrls);
-      }
-      else {
-        localStorage.setItem('defaultUrls', JSON.stringify(defaultUrls));
-      }
-      
-      if (sitesDiv) sitesDiv.style.display = 'block';
-      if (loaderDiv) loaderDiv.style.display = 'none';
-    }
-  }
-
- 
-
-
   return (
     <div className={styles['wrapper']}>
       <div className={styles['loader']}><FontAwesomeIcon icon={faSpiral} spin /></div>
@@ -186,7 +121,6 @@ export default function Home() {
         </div>
         
         <div id="loader_buttons" className={styles['default-button-holder']}>
-         <button type='button' onClick={loadFromStorage}><FontAwesomeIcon icon={faDatabase}  /></button>
          <button type='button' onClick={() => handleAddNewClick('newGrid')}><FontAwesomeIcon icon={faSquarePlus} /></button>
         </div>
       </div>
