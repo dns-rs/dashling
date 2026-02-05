@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#private index:
-/src/pages/index_private.tsx
+#private shortcuts:
+/public/data/private_shortcuts.json

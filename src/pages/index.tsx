@@ -13,40 +13,70 @@ import { faSpiral, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState('')
-
+  const [isSessionPrivate, setIsSessionPrivate] = useState(process.env.NEXT_PUBLIC_PRIVATE_MODE);
+  
+  const [isLoadingPrivate, setIsLoadingPrivate] = useState(false);
   const [activeUrls, setActiveUrls] = useState<{ [key: string]: Array<{ title: string; url: string }> }>({});
+
+  const checkAndLoadPrivateJson = async () => {
+    setIsLoadingPrivate(true);
+    if (isSessionPrivate == 'true') {     
+      try {
+        const response = await fetch('/data/private_shortcuts.json');        
+        if (response.ok) {          
+          const privateJson = await response.json();
+          console.log(privateJson)
+          localStorage.setItem('defaultUrls', JSON.stringify(privateJson));
+          setActiveUrls(privateJson);
+          console.log('Loaded private shortcuts');
+        } else {
+          console.log('Private shortcuts not found - public mode');
+        }
+      } catch (error) {
+        console.error('Error loading private shortcuts:', error);
+      }
+      finally {
+        setIsLoadingPrivate(false);
+      }
+    }
+    
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
         const stored = localStorage.getItem('defaultUrls');
         if (stored) {
+          console.log("got localstorage")
           setActiveUrls(JSON.parse(stored));
+        }
+        else {
+          checkAndLoadPrivateJson();
         }
       } catch (error) {
         console.error('Failed to parse localStorage:', error);
       }
     }
   }, []);
-
-  interface Site {
-    title: string;
-    url: string;
-  }
   
-  const handleAddGrid = (gridLabel: string, siteTitle: string, siteUrl: string) => {
-    const newItem = { title: siteTitle, url: siteUrl };  // Single item to add
+  const handleAddGrid = async (gridLabel: string, siteTitle: string, siteUrl: string) => {
+    if (isLoadingPrivate) {
+      console.log('Waiting for initial load to complete...');
+      return;
+    }
+
+    const newItem = { title: siteTitle, url: siteUrl }; 
     
     const stored = localStorage.getItem('defaultUrls');
-    let grid: { [key: string]: any[] } = {};  // Object with label -> array
-    
+    let grid: { [key: string]: any[] } = {}; 
+
     if (stored) {
       grid = JSON.parse(stored);
     }
-    
-    // Initialize array if missing, then always push
+
     if (!grid[gridLabel]) {
       grid[gridLabel] = [];
     }
@@ -57,6 +87,7 @@ export default function Home() {
   };
 
   const handleAddNewClick = (gridLabel: string) => {    
+    setIsLoadingPrivate(false);
     setSelectedLabel(gridLabel);
     setIsModalOpen(true); 
   };
@@ -66,24 +97,20 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storageUrlsExists = localStorage.getItem('defaultUrls') !== null;
-      const sitesDiv = document.getElementById('sites');
-      const defaultDiv = document.getElementById('loader_buttons');
+    if (typeof window === 'undefined') return;
+    
+    const hasUrls = Object.keys(activeUrls).length > 0 || localStorage.getItem('defaultUrls') !== null;
+    const sitesDiv = document.getElementById('sites');
+    const defaultDiv = document.getElementById('loader_buttons');
 
-      if (storageUrlsExists) {
-        console.log('defaultUrls exists in local storage');
-      } 
-
-      if (sitesDiv) {
-        sitesDiv.style.display = storageUrlsExists ? 'block' : 'none';       
-      }
-
-      if (defaultDiv) {
-        defaultDiv.style.display = storageUrlsExists ? 'none' : 'flex';
-      }
+    if (sitesDiv) {
+      sitesDiv.style.display = hasUrls ? 'block' : 'none';       
     }
-  }, []);
+
+    if (defaultDiv) {
+      defaultDiv.style.display = hasUrls ? 'none' : 'flex';
+    }
+  }, [activeUrls, isLoadingPrivate]);
 
   function getFaviconUrl(siteUrl: string): string | null {
     if (siteUrl.endsWith('.ico')) {
