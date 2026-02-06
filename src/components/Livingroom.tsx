@@ -64,7 +64,7 @@ const Livingroom = () => {
    return (
       <div className={styles['container']}>
          <div className={styles['header']}>
-            <h1 style={{color: responseError ? '#6a0000' : 'inherit'}} onClick={handleManualRestart}><FontAwesomeIcon icon={faCross} /></h1>
+            <h1 style={{color: responseError ? '#6a0000' : 'white'}} onClick={handleManualRestart}><FontAwesomeIcon icon={faCross} /></h1>
          </div>
          {LivingroomData ? (
             <div className={styles['weather-container']}>
@@ -94,7 +94,7 @@ const Livingroom = () => {
                   </div>
                </div>
             </div>
-         ):(<>Initializing... <span className={styles['scanner']}><FontAwesomeIcon icon={faWifi} spinPulse/></span></>)}
+         ): (<div className={styles['scanner-text']}>Scanning... <span className={styles['scanner']}><FontAwesomeIcon icon={faWifi} spinPulse/></span></div>)}
       </div>
    );
 };

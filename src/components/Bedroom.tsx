@@ -65,7 +65,7 @@ const Bedroom = () => {
    return (
       <div className={styles['container']}>
          <div className={styles['header']}>          
-            <h1 style={{color: responseError ? '#6a0000' : 'inherit'}} onClick={handleManualRestart}>
+            <h1 style={{color: responseError ? '#6a0000' : 'white'}} onClick={handleManualRestart}>
                <FontAwesomeIcon icon={faBed} />
             </h1>
          </div>
@@ -97,7 +97,7 @@ const Bedroom = () => {
                   </div>
                </div>
             </div>
-         ): (<>Initializing... <span className={styles['scanner']}><FontAwesomeIcon icon={faWifi} spinPulse/></span></>)}
+         ): (<div className={styles['scanner-text']}>Scanning... <span className={styles['scanner']}><FontAwesomeIcon icon={faWifi} spinPulse/></span></div>)}
       </div>
    );
 };
