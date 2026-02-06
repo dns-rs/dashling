@@ -14,7 +14,7 @@ const sensor: string | undefined = process.env.NEXT_PUBLIC_SENSOR_BEDROOM;
 
 const Bedroom = () => {
    const [BedroomData, setBedroomData] = useState<BedroomDataType | null>(null);
-   const [responseError, setResponseError] = useState(false)
+   const [responseError, setResponseError] = useState(false);
 
    const fetchBedroomData = async (retryCount = 0) => {
       try {
@@ -23,34 +23,51 @@ const Bedroom = () => {
          });
          setBedroomData(response.data);
          console.log("Bedroom data:", response.data);
+         setResponseError(false);
       } catch (error) {
          if (axios.isAxiosError(error)) {
             if (!error.response) {
                if (retryCount < 3) {
+                  console.log(`Retrying... (${retryCount + 1}/3)`);
                   setTimeout(() => fetchBedroomData(retryCount + 1), 1000);
-               } else {
-                  console.error('Network error:', error);
+                  return;
+               } else {                  
+                  console.error('Network error after retries:', error.message);
                }
-            } else {
-               console.error('Error response:', error.response);
+            } else {               
+               console.error('Server responded with error status:', error.response.status);
             }
          } else {
-            console.error('Unknown error:', error);
+            console.error('An unexpected error occurred:', error);
          }
-         setResponseError(true)
+        
+         setBedroomData(null);
+         setResponseError(true);
       }
    };
 
    useEffect(() => {
-      fetchBedroomData();
+      if (responseError) {
+         return;
+      }
+
       const intervalId = setInterval(fetchBedroomData, 120000);
+      fetchBedroomData();
       return () => clearInterval(intervalId);
-   }, []);
+
+   }, [responseError]);
+
+  
+   const handleManualRestart = () => {      
+      setResponseError(false);
+   };
 
    return (
       <div className={styles['container']}>
-         <div className={styles['header']}>
-            <h1 style={{color: responseError ? '#6a0000' : 'inherit'}} onClick={() => fetchBedroomData()}><FontAwesomeIcon icon={faBed} /></h1>
+         <div className={styles['header']}>          
+            <h1 style={{color: responseError ? '#6a0000' : 'inherit'}} onClick={handleManualRestart}>
+               <FontAwesomeIcon icon={faBed} />
+            </h1>
          </div>
          {BedroomData ? (
             <div className={styles['weather-container']}>

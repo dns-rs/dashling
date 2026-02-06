@@ -6,7 +6,7 @@ $dark: #2a2a2a;
    width: 100%;
    max-width: 1024px;
    text-align: center;
-   border: 1px solid $dark;
+   border: 1px solid #2a2a2a;
    padding: 30px 10px 20px;
    border-radius: 10px;
 }
@@ -22,7 +22,7 @@ $dark: #2a2a2a;
    height: 45px;
    width: auto;
    border-radius: 50%;
-   background-color: $dark;
+   background-color: #2a2a2a;
    padding: 11px;
    margin-bottom: 10px;
    &:hover {
@@ -33,7 +33,7 @@ $dark: #2a2a2a;
 
 @keyframes blink {
    0%, 100% {
-     background-color: $dark; 
+     background-color: #2a2a2a; 
    }
    50% {
      background-color: #2e2e2e; 
@@ -104,6 +104,7 @@ $dark: #2a2a2a;
    height: 100%;
    width: 100%;
    animation:  fade-me-in 0.4s ease-in forwards;
+   background-color: #353535;
    .loader {
       animation:  fade-me-out 0.3s ease-in-out forwards;
       animation-delay: 1.8s;
@@ -116,9 +117,10 @@ $dark: #2a2a2a;
       justify-content: center;
       align-items: center;
       // min-height: 100vh;
-      color:$dark;
+      color:#2a2a2a;
    }
    .main-container {
+      background-color: #353535;
       animation:  fade-me-in 0.7s ease-in forwards;
       animation-delay: 1.9s;
       z-index: 2;
@@ -166,7 +168,7 @@ $dark: #2a2a2a;
    gap: 20px;
    justify-content: center;
    button {
-      background-color: $dark;
+      background-color: #2a2a2a;
       padding: 10px;
       border-radius: 10px;
       height: fit-content;

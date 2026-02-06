@@ -23,34 +23,48 @@ const Livingroom = () => {
          });
          setLivingroomData(response.data);
          console.log("Livingroom data:", response.data);
+         setResponseError(false);
       } catch (error) {
          if (axios.isAxiosError(error)) {
             if (!error.response) {
                if (retryCount < 3) {
+                  console.log(`Retrying... (${retryCount + 1}/3)`);
                   setTimeout(() => fetchLivingroomData(retryCount + 1), 1000);
+                  return;
                } else {
-                  console.error('Network error:', error);
+                  console.error('Network error after retries:', error.message);
                }
             } else {
-               console.error('Error response:', error.response);
+               console.error('Server responded with error status:', error.response.status);
             }
          } else {
-            console.error('Unknown error:', error);
+            console.error('An unexpected error occurred:', error);
          }
-         setResponseError(true)
+
+         setLivingroomData(null);
+         setResponseError(true);
       }
    };
 
    useEffect(() => {
-      fetchLivingroomData();
+      if (responseError) {
+         return;
+      }
+
       const intervalId = setInterval(fetchLivingroomData, 120000);
+      fetchLivingroomData();
       return () => clearInterval(intervalId);
-   }, []);
+
+   }, [responseError]);
+
+   const handleManualRestart = () => {      
+      setResponseError(false);
+   };
 
    return (
       <div className={styles['container']}>
          <div className={styles['header']}>
-            <h1 style={{color: responseError ? '#6a0000' : 'inherit'}} onClick={() => fetchLivingroomData()}><FontAwesomeIcon icon={faCross} /></h1>
+            <h1 style={{color: responseError ? '#6a0000' : 'inherit'}} onClick={handleManualRestart}><FontAwesomeIcon icon={faCross} /></h1>
          </div>
          {LivingroomData ? (
             <div className={styles['weather-container']}>
