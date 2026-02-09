@@ -1,3 +1,5 @@
+$cylon_red : rgb(158, 0, 0);
+
 .container {
    margin: -15px auto 3px auto;
    width: 100%;
@@ -21,6 +23,7 @@
       font-size: 16px;
       text-transform: uppercase;
       color: white;
+      cursor: pointer;
    }
 }
 .image {
@@ -38,7 +41,7 @@
 
    &:hover {
       background-color: #2e2e2e;
-      animation:  blink 0.5s ease-in-out 1;
+      animation:  blink 0.2s ease-in-out 1;
    }
 }
 
@@ -46,10 +49,10 @@
    0%, 100% {
      background-color: #2a2a2a;
    }
-   50% {
+   30% {
      background-color: #2e2e2e; 
    }
- }
+}
 
 .card {
    a {
@@ -64,9 +67,65 @@
    button {
       font-size: 13px;
    }
+   .disabled {
+      display: flex;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-size: 13px;
+      .image {
+         &:hover {
+            background-color: $cylon_red;
+            animation: fadeIn 0.15s ease-out 1;
+            cursor: pointer;
+         }
+      }
+      img {
+         border: 2px solid $cylon_red;
+      }
+      
+   }
+}
+
+@keyframes fadeIn {
+   0% {
+     background-color: #2a2a2a;
+   }
+   100% {
+     background-color: $cylon_red; 
+   }
 }
 
 .title {
    color: white;
+}
+
+.modal-content {
+   text-align: center;
+}
+
+.modal-button {
+   margin-top: 10px;
+   background-color: #2a2a2a;
+   padding: 10px 40px;
+   border-radius: 20px;
+
+   &:hover {      
+      background-color: $cylon_red;
+      animation: fadeIn 0.3s ease-out 1;
+   }
+}
+
+.modal {
+   h2 {
+      color: #777777;
+      padding: 36px;
+      span {
+         color: $cylon_red;
+         font-weight: bold;
+      }
+   }
 }
 

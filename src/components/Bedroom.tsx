@@ -65,7 +65,7 @@ const Bedroom = () => {
    return (
       <div className={styles['container']}>
          <div className={styles['header']}>          
-            <h1 style={{color: responseError ? '#6a0000' : 'white'}} onClick={handleManualRestart}>
+            <h1 style={{color: responseError ? 'rgb(158, 0, 0)' : 'white'}} onClick={handleManualRestart}>
                <FontAwesomeIcon icon={faBed} />
             </h1>
          </div>

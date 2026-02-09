@@ -28,8 +28,9 @@ $dark: #2a2a2a;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      color: #212121;
       span{
-         color: black;
+         color: #777777;
          padding-left: 18px;
          font-weight: bold;
       }
@@ -38,4 +39,5 @@ $dark: #2a2a2a;
    .content{
       padding: 10px 20px;
    }
+
 }
