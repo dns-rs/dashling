@@ -1,8 +1,9 @@
 import styles from './index.module.scss';
 
 import Weather from '../components/Weather'
-import Bedroom from '@/components/Bedroom';
-import Livingroom from '@/components/Livingroom';
+import Bedroom from '@/components/sensors/Bedroom';
+import Livingroom from '@/components/sensors/Livingroom';
+import Hole from '@/components/sensors/Hole'
 
 import Grid from '../components/Grid'
 import Modal from '@/components/Modal';
@@ -11,6 +12,7 @@ import ModalGridCreate from '@/components/ModalGridCreate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpiral, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
+import Nina from '@/components/sensors/Nina';
 
 export default function Home() {
 
@@ -135,10 +137,14 @@ export default function Home() {
         <div className={styles['left']}>
          <div className={`${styles['weather-component']}`}>      
               <Weather />                  
-              <div className={styles['sensor-component']}>
-                <Livingroom />
+              <div className={styles['sensor-component']}>                
                 <Bedroom />
+                <Livingroom />               
               </div>             
+              <div className={styles['sensor-component']}>                
+                <Hole />
+                <Nina />
+              </div>    
           </div>
         </div>
 

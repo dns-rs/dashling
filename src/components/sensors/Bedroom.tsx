@@ -1,47 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThermometerHalf, faDroplet, faComment, faCross, faWifi } from '@fortawesome/free-solid-svg-icons';
-import styles from './Livingroom.module.scss';
+import { faThermometerHalf, faDroplet, faComment, faBed, faWifi } from '@fortawesome/free-solid-svg-icons';
+import styles from './Bedroom.module.scss';
 
-interface LivingroomDataType {
+interface BedroomDataType {
    temperature: number;
    feelsLike: number;
    humidity: number;
 }
 
-const sensor: string | undefined = process.env.NEXT_PUBLIC_SENSOR_LIVINGROOM;
+const sensor: string | undefined = process.env.NEXT_PUBLIC_SENSOR_BEDROOM;
 
-const Livingroom = () => {
-   const [LivingroomData, setLivingroomData] = useState<LivingroomDataType | null>(null);
-   const [responseError, setResponseError] = useState(false)
+const Bedroom = () => {
+   const [BedroomData, setBedroomData] = useState<BedroomDataType | null>(null);
+   const [responseError, setResponseError] = useState(false);
 
-   const fetchLivingroomData = async (retryCount = 0) => {
+   const fetchBedroomData = async (retryCount = 0) => {
       try {
          const response = await axios.get(sensor!, {
             timeout: 5000,
          });
-         setLivingroomData(response.data);
-         console.log("Livingroom data:", response.data);
+         setBedroomData(response.data);
+         console.log("Bedroom data:", response.data);
          setResponseError(false);
       } catch (error) {
          if (axios.isAxiosError(error)) {
             if (!error.response) {
                if (retryCount < 3) {
                   console.log(`Retrying... (${retryCount + 1}/3)`);
-                  setTimeout(() => fetchLivingroomData(retryCount + 1), 1000);
+                  setTimeout(() => fetchBedroomData(retryCount + 1), 1000);
                   return;
-               } else {
+               } else {                  
                   console.error('Network error after retries:', error.message);
                }
-            } else {
+            } else {               
                console.error('Server responded with error status:', error.response.status);
             }
          } else {
             console.error('An unexpected error occurred:', error);
          }
-
-         setLivingroomData(null);
+        
+         setBedroomData(null);
          setResponseError(true);
       }
    };
@@ -51,29 +51,32 @@ const Livingroom = () => {
          return;
       }
 
-      const intervalId = setInterval(fetchLivingroomData, 120000);
-      fetchLivingroomData();
+      const intervalId = setInterval(fetchBedroomData, 120000);
+      fetchBedroomData();
       return () => clearInterval(intervalId);
 
    }, [responseError]);
 
+  
    const handleManualRestart = () => {      
       setResponseError(false);
    };
 
    return (
       <div className={styles['container']}>
-         <div className={styles['header']}>
-            <h1 style={{color: responseError ? 'rgb(158, 0, 0)' : 'white'}} onClick={handleManualRestart}><FontAwesomeIcon icon={faCross} /></h1>
+         <div className={styles['header']}>          
+            <h1 style={{color: responseError ? 'rgb(158, 0, 0)' : 'white'}} onClick={handleManualRestart}>
+               <FontAwesomeIcon icon={faBed} />
+            </h1>
          </div>
-         {LivingroomData ? (
+         {BedroomData ? (
             <div className={styles['weather-container']}>
                <div className={styles['weather-module']}>
                   <div className={styles['icons']}>
                      <FontAwesomeIcon icon={faThermometerHalf} />
                   </div>
                   <div className={styles['text']}>
-                     {LivingroomData.temperature}°C
+                     {Math.round(BedroomData.temperature)}°C
                   </div>
                </div>
                <div className={styles['weather-module']}>
@@ -82,7 +85,7 @@ const Livingroom = () => {
                         <span className={styles['icon-2']}><FontAwesomeIcon icon={faComment} /> </span>
                   </div>
                   <div className={styles['text']}>
-                    {LivingroomData.feelsLike}°C
+                    {Math.round(BedroomData.feelsLike)}°C
                   </div>
                </div>
                <div className={styles['weather-module']}>
@@ -90,7 +93,7 @@ const Livingroom = () => {
                      <FontAwesomeIcon icon={faDroplet} />
                   </div>
                   <div className={styles['text']}>
-                    {LivingroomData.humidity}%
+                     {Math.round(BedroomData.humidity)}°C
                   </div>
                </div>
             </div>
@@ -99,4 +102,4 @@ const Livingroom = () => {
    );
 };
 
-export default Livingroom;
+export default Bedroom;

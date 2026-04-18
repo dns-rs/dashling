@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThermometerHalf, faDroplet, faComment, faBed, faWifi } from '@fortawesome/free-solid-svg-icons';
-import styles from './Bedroom.module.scss';
+import { faThermometerHalf, faDroplet, faComment, faHatWizard, faWifi } from '@fortawesome/free-solid-svg-icons';
+import styles from './Hole.module.scss';
 
-interface BedroomDataType {
+interface HoleDataType {
    temperature: number;
    feelsLike: number;
    humidity: number;
 }
 
-const sensor: string | undefined = process.env.NEXT_PUBLIC_SENSOR_BEDROOM;
+const sensor: string | undefined = process.env.NEXT_PUBLIC_SENSOR_Hole;
 
-const Bedroom = () => {
-   const [BedroomData, setBedroomData] = useState<BedroomDataType | null>(null);
+const Hole = () => {
+   const [HoleData, setHoleData] = useState<HoleDataType | null>(null);
    const [responseError, setResponseError] = useState(false);
 
-   const fetchBedroomData = async (retryCount = 0) => {
+   const fetchHoleData = async (retryCount = 0) => {
       try {
          const response = await axios.get(sensor!, {
             timeout: 5000,
          });
-         setBedroomData(response.data);
-         console.log("Bedroom data:", response.data);
+         setHoleData(response.data);
+         console.log("Hole data:", response.data);
          setResponseError(false);
       } catch (error) {
          if (axios.isAxiosError(error)) {
             if (!error.response) {
                if (retryCount < 3) {
                   console.log(`Retrying... (${retryCount + 1}/3)`);
-                  setTimeout(() => fetchBedroomData(retryCount + 1), 1000);
+                  setTimeout(() => fetchHoleData(retryCount + 1), 1000);
                   return;
                } else {                  
                   console.error('Network error after retries:', error.message);
@@ -41,7 +41,7 @@ const Bedroom = () => {
             console.error('An unexpected error occurred:', error);
          }
         
-         setBedroomData(null);
+         setHoleData(null);
          setResponseError(true);
       }
    };
@@ -51,8 +51,8 @@ const Bedroom = () => {
          return;
       }
 
-      const intervalId = setInterval(fetchBedroomData, 120000);
-      fetchBedroomData();
+      const intervalId = setInterval(fetchHoleData, 120000);
+      fetchHoleData();
       return () => clearInterval(intervalId);
 
    }, [responseError]);
@@ -66,17 +66,17 @@ const Bedroom = () => {
       <div className={styles['container']}>
          <div className={styles['header']}>          
             <h1 style={{color: responseError ? 'rgb(158, 0, 0)' : 'white'}} onClick={handleManualRestart}>
-               <FontAwesomeIcon icon={faBed} />
+               <FontAwesomeIcon icon={faHatWizard} />
             </h1>
          </div>
-         {BedroomData ? (
+         {HoleData ? (
             <div className={styles['weather-container']}>
                <div className={styles['weather-module']}>
                   <div className={styles['icons']}>
                      <FontAwesomeIcon icon={faThermometerHalf} />
                   </div>
                   <div className={styles['text']}>
-                     {BedroomData.temperature}°C
+                     {Math.round(HoleData.temperature)}°C
                   </div>
                </div>
                <div className={styles['weather-module']}>
@@ -85,7 +85,7 @@ const Bedroom = () => {
                         <span className={styles['icon-2']}><FontAwesomeIcon icon={faComment} /> </span>
                   </div>
                   <div className={styles['text']}>
-                    {BedroomData.feelsLike}°C
+                    {Math.round(HoleData.feelsLike)}°C
                   </div>
                </div>
                <div className={styles['weather-module']}>
@@ -93,7 +93,7 @@ const Bedroom = () => {
                      <FontAwesomeIcon icon={faDroplet} />
                   </div>
                   <div className={styles['text']}>
-                    {BedroomData.humidity}%
+                    {Math.round(HoleData.humidity)}°C
                   </div>
                </div>
             </div>
@@ -102,4 +102,4 @@ const Bedroom = () => {
    );
 };
 
-export default Bedroom;
+export default Hole;
