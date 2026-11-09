@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThermometerHalf, faDroplet, faComment, faCouch, faWifi } from '@fortawesome/free-solid-svg-icons';
-import styles from './Livingroom.module.scss';
+import styles from './Sensor.module.scss';
 
 interface LivingroomDataType {
    temperature: number;
@@ -64,7 +64,7 @@ const Livingroom = () => {
    return (
       <div className={styles['container']}>
          <div className={styles['header']}>
-            <h1 style={{color: responseError ? 'rgb(158, 0, 0)' : 'white'}} onClick={handleManualRestart}><FontAwesomeIcon icon={faCouch} /></h1>
+            <h1 style={{color: responseError ? 'rgb(158, 0, 0)' : ''}} onClick={handleManualRestart}><FontAwesomeIcon icon={faCouch} /></h1>
          </div>
          {LivingroomData ? (
             <div className={styles['weather-container']}>

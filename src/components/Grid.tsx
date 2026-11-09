@@ -34,7 +34,8 @@ const Grid: React.FC<GridProps> = ({ sites, label, onAddNewClick  }) => {
     } 
     try {
       const hostname = new URL(siteUrl).hostname;
-      return `https://www.google.com/s2/favicons?domain=${hostname}`;
+      // Request a larger size (e.g., 128px) so it stays sharp when scaled
+      return `https://www.google.com/s2/favicons?domain=${hostname}&sz=128`;
     } catch (error) {
       console.error('Invalid site URL:', siteUrl);
       return '/images/earth.png';

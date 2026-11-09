@@ -1,10 +1,12 @@
 import styles from './index.module.scss';
-
+// -------------- API -----------------
 import Weather from '../components/Weather'
+// ------------- SENSOR ---------------
 import Bedroom from '@/components/sensors/Bedroom';
 import Livingroom from '@/components/sensors/Livingroom';
 import Hole from '@/components/sensors/Hole'
-
+import Nina from '@/components/sensors/Nina';
+// -------------- MISC ----------------
 import Grid from '../components/Grid'
 import Modal from '@/components/Modal';
 import ModalGridCreate from '@/components/ModalGridCreate';
@@ -12,7 +14,7 @@ import ModalGridCreate from '@/components/ModalGridCreate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpiral, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-import Nina from '@/components/sensors/Nina';
+
 
 export default function Home() {
 

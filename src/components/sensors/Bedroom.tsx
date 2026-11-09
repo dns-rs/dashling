@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThermometerHalf, faDroplet, faComment, faBed, faWifi } from '@fortawesome/free-solid-svg-icons';
-import styles from './Bedroom.module.scss';
+import styles from './Sensor.module.scss';
 
 interface BedroomDataType {
    temperature: number;
@@ -65,7 +65,7 @@ const Bedroom = () => {
    return (
       <div className={styles['container']}>
          <div className={styles['header']}>          
-            <h1 style={{color: responseError ? 'rgb(158, 0, 0)' : 'white'}} onClick={handleManualRestart}>
+            <h1 style={{color: responseError ? 'rgb(158, 0, 0)' : ''}} onClick={handleManualRestart}>
                <FontAwesomeIcon icon={faBed} />
             </h1>
          </div>
@@ -93,7 +93,7 @@ const Bedroom = () => {
                      <FontAwesomeIcon icon={faDroplet} />
                   </div>
                   <div className={styles['text']}>
-                     {Math.round(BedroomData.humidity)}°C
+                     {Math.round(BedroomData.humidity)}%
                   </div>
                </div>
             </div>
