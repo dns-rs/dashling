@@ -42,8 +42,12 @@
 }
 
 .scanner-text {
-   color: #272626;
-   margin-top: 20px;
+    color: var(--text);
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 19px;
 }
 
 .weather-container {

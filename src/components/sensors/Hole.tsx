@@ -97,7 +97,7 @@ const Hole = () => {
                   </div>
                </div>
             </div>
-         ): (<div className={styles['scanner-text']}>Scanning... <span className={styles['scanner']}><FontAwesomeIcon icon={faWifi} spinPulse/></span></div>)}
+         ): (<div className={styles['scanner-text']}><span className={styles['scanner']}><FontAwesomeIcon icon={faWifi} fade/></span></div>)}
       </div>
    );
 };
