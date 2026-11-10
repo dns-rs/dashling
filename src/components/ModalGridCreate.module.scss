@@ -13,7 +13,7 @@
    color: black;
 
    label {
-      color: $text;
+      color: var(--text);
       font-size: 12px;
    }
 }
@@ -25,10 +25,10 @@
       background-color: black;
       padding: 8px 15px;
       border-radius: 13px;
-      color: $accent;      
+      color: var(--accent);      
    }
    .button-text {
-      color: $text;
+      color: var(--text);
    }
 }
 

@@ -4,7 +4,7 @@
    width: 100%;
    max-width: 1024px;
    text-align: center;
-   border: 1px solid $accent;
+   border: 1px solid var(--accent);
    padding: 30px 10px 20px;
    border-radius: 10px;
 }
@@ -14,14 +14,14 @@
    align-content: center;
    justify-content: center;
    align-items: center;
-   color: $text;
+   color: var(--text);
    // padding: 20px 0px 0px;
 }
 .image {
    height: 45px;
    width: auto;
    border-radius: 50%;
-   background-color: $accent;
+   background-color: var(--accent);
    padding: 11px;
    margin-bottom: 10px;
    &:hover {
@@ -32,7 +32,7 @@
 
 @keyframes blink {
    0%, 100% {
-     background-color: $accent; 
+     background-color: var(--accent); 
    }
    50% {
      background-color: #2e2e2e; 
@@ -101,7 +101,7 @@
    height: 100%;
    width: 100%;
    animation:  fade-me-in 0.4s ease-in forwards;
-   background-color: $background;
+   background-color: var(--background);
    .loader {
       animation:  fade-me-out 0.3s ease-in-out forwards;
       animation-delay: 1.8s;
@@ -114,11 +114,11 @@
       justify-content: center;
       align-items: center;
       // min-height: 100vh;
-      color:$accent;
-      background-color: $background;
+      color:var(--accent);
+      background-color: var(--background);
    }
    .main-container {
-      background-color: $background;
+      background-color: var(--background);
       animation:  fade-me-in 0.7s ease-in forwards;
       animation-delay: 1.9s;
       z-index: 2;
@@ -166,7 +166,7 @@
    gap: 20px;
    justify-content: center;
    button {
-      background-color: $accent;
+      background-color: var(--accent);
       padding: 10px;
       border-radius: 10px;
       height: fit-content;

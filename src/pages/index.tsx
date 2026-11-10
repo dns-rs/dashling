@@ -10,10 +10,12 @@ import Nina from '@/components/sensors/Nina';
 import Grid from '../components/Grid'
 import Modal from '@/components/Modal';
 import ModalGridCreate from '@/components/ModalGridCreate';
+import Settings from '@/components/settings/Settings';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpiral, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
+
 
 
 export default function Home() {
@@ -21,9 +23,11 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState('')
   const [isSessionPrivate, setIsSessionPrivate] = useState(process.env.NEXT_PUBLIC_PRIVATE_MODE);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   
   const [isLoadingPrivate, setIsLoadingPrivate] = useState(false);
   const [activeUrls, setActiveUrls] = useState<{ [key: string]: Array<{ title: string; url: string }> }>({});
+
 
 
   const checkAndLoadPrivateJson = async () => {
@@ -136,6 +140,7 @@ export default function Home() {
     <div className={styles['wrapper']}>
       <div className={styles['loader']}><FontAwesomeIcon icon={faSpiral} spin /></div>
       <div className={styles['main-container']}>
+        <Settings />
         <div className={styles['left']}>
          <div className={`${styles['weather-component']}`}>      
               <Weather />                  

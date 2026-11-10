@@ -3,7 +3,7 @@
    width: 100%;
    max-width: 1024px;
    text-align: center;
-   border: 1px solid $accent;
+   border: 1px solid var(--accent);
    padding: 20px 10px 20px;
    border-radius: 10px;
 }
@@ -17,11 +17,11 @@
    h1 {
       position: relative;
       top: 3px;
-      background-color: $background;
+      background-color: var(--background);
       padding: 5px;
       font-size: 16px;
       text-transform: uppercase;
-      color: $text;
+      color: var(--text);
    }
 }
 
@@ -43,12 +43,12 @@
       width: 35px;
       height: 35px;
       border-radius: 50%;
-      background-color: $accent;
+      background-color: var(--accent);
       padding: 5px;
       margin-bottom: 10px;
       text-align: center;  
       float: left;    
-      color: $text;
+      color: var(--text);
       &:hover {
          animation: blink 0.25s linear forwards; 
          cursor: pointer;
@@ -77,24 +77,24 @@
       position: relative;
       top: -5px;
       font-size: 12px;
-      color: $text;
+      color: var(--text);
    }
    
 }
 
 @keyframes blink {
    0% {
-      background-color: rgba($accent, 1); 
+      background-color: rgba(var(--accent), 1); 
    }
    100% {
-      background-color: rgba($accent, 0.3); 
+      background-color: rgba(var(--accent), 0.3); 
    }
 }
 
 .clothing-container {
    margin-top: 16px;
    padding-top: 16px;
-   border-top: 1px solid $accent;
+   border-top: 1px solid var(--accent);
    display: flex;
    justify-content: center;
    align-items: center;
@@ -106,14 +106,14 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;    
-      color: $text;
+      color: var(--text);
       span {
-         color: $accent;
+         color: var(--accent);
          font-size: 35px;
          margin-right: 10px;
       }
       .clothing-text {
-         color: $text;
+         color: var(--text);
          font-size: 22px;
       }
    }
@@ -122,9 +122,9 @@
       width: auto;                  
    }
    li {
-      border-left: 1px solid $text;
+      border-left: 1px solid var(--text);
       padding-left: 10px;
-      color: $text;
+      color: var(--text);
    }
 
    
