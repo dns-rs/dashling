@@ -108,10 +108,10 @@
 
 @keyframes blink {
    0% {
-      background-color: rgba(var(--accent), 1); 
+      background-color: var(--accent); 
    }
    100% {
-      background-color: rgba(var(--accent), 0.3); 
+      background-color: color-mix(in srgb, var(--accent) 35%, transparent); 
    }
 }
 

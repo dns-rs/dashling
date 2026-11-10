@@ -38,16 +38,17 @@
    color: var(--text);
 
    &:hover {
-      animation: blink 0.25s linear forwards; 
+      animation: blink 0.2s linear forwards; 
    }
 }
 
 @keyframes blink {
    0% {
-      background-color: rgba(var(--accent), 1); 
+      background-color: var(--accent); 
    }
    100% {
-      background-color: rgba(var(--accent), 0.3); 
+      // color-mix allows changing opacity of hex/CSS variables cleanly
+      background-color: color-mix(in srgb, var(--accent) 35%, transparent); 
    }
 }
 
@@ -74,24 +75,23 @@
       font-size: 13px;
       .image {
          &:hover {
-            background-color: $error;
+            background-color: var(--error); // Fixed to CSS variable
             animation: fadeIn 0.15s ease-out 1;
             cursor: pointer;
          }
       }
       img {
-         border: 2px solid $error;
+         border: 2px solid var(--error); // Fixed to CSS variable
       }
-      
    }
 }
 
 @keyframes fadeIn {
    0% {
-     background-color: var(--accent);
+      background-color: var(--accent);
    }
    100% {
-     background-color: $error; 
+      background-color: var(--error); 
    }
 }
 
@@ -110,7 +110,7 @@
    border-radius: 20px;
 
    &:hover {      
-      background-color: $error;
+      background-color: var(--error); // Fixed to CSS variable
       animation: fadeIn 0.3s ease-out 1;
    }
 }
@@ -120,9 +120,8 @@
       color: #777777;
       padding: 36px;
       span {
-         color: $error;
+         color: var(--error); // Fixed to CSS variable
          font-weight: bold;
       }
    }
 }
-

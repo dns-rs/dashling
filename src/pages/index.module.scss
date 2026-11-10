@@ -31,13 +31,13 @@
 }
 
 @keyframes blink {
-   0%, 100% {
-     background-color: var(--accent); 
+   0% {
+      background-color: var(--accent); 
    }
-   50% {
-     background-color: #2e2e2e; 
+   100% {
+      background-color: color-mix(in srgb, var(--accent) 35%, transparent); 
    }
- }
+}
 
 .card {
    a {

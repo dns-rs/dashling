@@ -27,8 +27,10 @@
       flex-direction: row;
       justify-content: space-between;
       color: #212121;
+      border-radius: 10px 10px 0 0;
+      background-color: var(--background);
       span{
-         color: #777777;
+         color: var(--text);
          padding-left: 18px;
          font-weight: bold;
       }
